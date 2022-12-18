@@ -1,0 +1,26 @@
+<template>
+  <div class="col-4 offset-4 mt-3">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email Address</label>
+      <input type="email" class="form-control" id="email" placeholder="name@email.com" />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" v-model="password" />
+    </div>
+    <div class="mb-3">
+      <button class="btn btn-primary" @click.prevent="onSubmit">Register</button>
+    </div>
+    <div class="text-center">
+      Allready have an Account? Login Now
+    </div>
+  </div>
+</template>
+
+<script>
+// @ is an alias to /src
+
+export default {
+  name: 'RegisterView',
+}
+</script>
