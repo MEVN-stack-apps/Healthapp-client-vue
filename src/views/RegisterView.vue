@@ -40,7 +40,7 @@ export default {
           alert(res.err);
           return;
         }
-        router.push('/profile');
+        router.push('/about');
       });
     }
     return {
