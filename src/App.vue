@@ -11,7 +11,12 @@
   
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-  
+          <li class="nav-link">
+            <router-link to="/login" class="nav-link">Login</router-link>
+          </li>
+          <li class="nav-link">
+            <router-link to="/register" class="nav-link">Register</router-link>
+          </li>
         </ul>
       </div>
     </nav>

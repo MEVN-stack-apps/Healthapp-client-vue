@@ -2,25 +2,52 @@
   <div class="col-4 offset-4 mt-3">
     <div class="mb-3">
       <label for="email" class="form-label">Email Address</label>
-      <input type="email" class="form-control" id="email" placeholder="name@email.com" />
+      <input type="email" class="form-control" id="email" v-model="email" placeholder="name@email.com" required/>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" id="password" v-model="password" />
+      <input type="password" class="form-control" id="password" v-model="password" required/>
     </div>
     <div class="mb-3">
       <button class="btn btn-primary" @click.prevent="onSubmit">Register</button>
     </div>
     <div class="text-center">
-      Allready have an Account? Login Now
+      Allready have an Account? <router-link to="/login">Login</router-link> Now
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import { ref } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: 'RegisterView',
+  setup() {
+    const email = ref('');
+    const password = ref('');
+    const store = useStore();
+    const router = useRouter();
+    
+    function onSubmit() {
+      store.dispatch('registerUser', {
+        email: email.value,
+        password: password.value
+      }).then(res => {
+        if (res.err) {
+          alert(res.err);
+          return;
+        }
+        router.push('/profile');
+      });
+    }
+    return {
+      email,
+      password,
+      onSubmit
+    };
+  },
 }
 </script>
