@@ -3,7 +3,10 @@
 
     <div v-if="$store.getters.profile">
       <h4>My Profile</h4>
-      {{ $store.getters.profile }}
+      <p>First Name: {{ $store.getters.profile.firstName }}</p>
+      <p>Last Name: {{ $store.getters.profile.lastName }}</p>
+      <p>Gender: {{ $store.getters.profile.gender }}</p>
+      <p>Birth Year: {{ $store.getters.profile.yearOfBirth }}</p>
     </div>
 
     <div v-else>
@@ -38,10 +41,6 @@
         </div>
       </div>
     </div>
-    
-
-    
-    
   </div>
 </template>
 
@@ -68,14 +67,9 @@ export default {
           alert(data.err);
           return;
         }
-        // store.dispatch('getProfile', data);
-
       });
     }
-    // todo: get profile with or withour compositional api cause store is emty after login
-    // onMounted(() => {
-    //   store.dispatch('getProfile', data);
-    // })
+
     store.dispatch('getProfile');
     
     return {
