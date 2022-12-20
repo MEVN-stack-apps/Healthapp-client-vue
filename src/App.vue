@@ -10,12 +10,21 @@
       </div>
   
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto" v-if="!$store.getters.isAuthenticated">
+        <ul class="navbar-nav ml-auto" v-if="!$store.getters.token">
           <li class="nav-link">
             <router-link to="/login" class="nav-link">Login</router-link>
           </li>
           <li class="nav-link">
             <router-link to="/register" class="nav-link">Register</router-link>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto" v-else>
+          <li class="nav-link">
+            <router-link to="/profile" class="nav-link">My Profile</router-link>
+          </li>
+          <li class="nav-link">
+            <a href="#" class="nav-link" @click.prevent="logout()">Logout</a>
           </li>
         </ul>
       </div>
@@ -28,6 +37,17 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      this.$store.commit('setToken');
+      this.$router.push('/login');
+    }
+  }
+};
+</script>
 
 <style scoped>
 .navbar {
