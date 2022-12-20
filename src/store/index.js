@@ -1,23 +1,24 @@
 import { createStore } from 'vuex';
-import { postJson, } from '@/utils/https';
+import { postJson, getJson } from '@/utils/https';
 
 export default createStore({
   state: {
     token: localStorage.getItem('auth-token'),
-    // profile: {
-    //   firstName: '',
-    //   lastName: '',
-    //   gender: '',
-    //   yearOfBirth: ''
-    // },
+    profile: {
+      // firstName: '',
+      // lastName: '',
+      // gender: '',
+      // yearOfBirth: ''
+    },
   },
   getters: {
     token(state) {
       return state.token;
     },
-    // profile(state) {
-    //   return state.profile;
-    // },
+    profile(state) {
+      // console.log("state.profile in getter:", state.profile);
+      return state.profile;
+    },
   },
   mutations: {
     setToken(state, value) {
@@ -29,34 +30,36 @@ export default createStore({
         localStorage.removeItem('auth-token');
       }
     },
-    // setProfile(state, profile) {
-    //   state.profile = profile;
-    // },
+    setProfile(state, profile) {
+      console.log("2. profile in mutation:", profile);
+      state.profile = profile;
+    },
   },
   actions: {
-    // addProfile(context, data) {
-    //   return postJson({
-    //     url: '/profile',
-    //     data
-    //   }).then(data => {
-    //     console.log("profile in action:", data);
-    //     if (data.profile) {
-    //       context.commit('setProfile', data.profile);
-    //       return data;
-    //     }
-    //   });
-    // },
-    // getProfile(context, user) {
-    //   return getJson({
-    //     url: `/profile/${user._id}`
-    //   }).then(data => {
-    //     if (data.err) {
-    //       return data;
-    //     }
-    //     context.commit('setProfile', data.profile);
-    //     return data;
-    //   });
-    // },
+    addProfile(context, data) {
+      return postJson({
+        url: '/profile',
+        data
+      }).then(data => {
+        // console.log("profile in action:", data);
+        if (data.profile) {
+          context.commit('setProfile', data.profile);
+          return data;
+        }
+      });
+    },
+    getProfile(context, data) {
+      console.log("1. data in getprofile action:", data);
+      return getJson({
+        url: `/profile/${data.id}`
+      }).then(data => {
+        if (data.err) {
+          return data;
+        }
+        context.commit('setProfile', data.profile);
+        return data;
+      });
+    },
     registerUser(context, data) {
       return postJson({
         url: '/register',

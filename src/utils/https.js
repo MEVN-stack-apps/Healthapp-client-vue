@@ -21,7 +21,6 @@ function checkAuth(res) {
 
 const postJson = async function (options) {
   const headers = getHeaders();
-  console.log(options);
   const response = await fetch(`${baseURL}${options.url}`, {
     method: 'post',
     headers,
