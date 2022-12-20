@@ -25,6 +25,7 @@ import { useRouter } from "vue-router";
 
 export default {
   name: 'LoginView',
+
   setup() {
     const email = ref('');
     const password = ref('');
@@ -43,11 +44,12 @@ export default {
         router.push('/profile');
       });
     }
+
     return {
       email,
       password,
       onSubmit
     };
   },
-}
+};
 </script>
