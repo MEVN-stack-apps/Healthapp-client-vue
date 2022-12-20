@@ -64,12 +64,11 @@ export default {
         gender: gender.value,
         yearOfBirth: yearOfBirth.value
       }).then(data => {
-        console.log("data in profile vue:", data)
         if (data.err) {
           alert(data.err);
           return;
         }
-        store.dispatch('getProfile', data);
+        // store.dispatch('getProfile', data);
 
       });
     }
@@ -77,7 +76,7 @@ export default {
     // onMounted(() => {
     //   store.dispatch('getProfile', data);
     // })
-    // store.dispatch('getProfile', data);
+    store.dispatch('getProfile');
     
     return {
       addProfile,

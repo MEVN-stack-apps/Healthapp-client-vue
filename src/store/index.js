@@ -16,7 +16,6 @@ export default createStore({
       return state.token;
     },
     profile(state) {
-      // console.log("state.profile in getter:", state.profile);
       return state.profile;
     },
   },
@@ -31,7 +30,6 @@ export default createStore({
       }
     },
     setProfile(state, profile) {
-      console.log("2. profile in mutation:", profile);
       state.profile = profile;
     },
   },
@@ -41,22 +39,23 @@ export default createStore({
         url: '/profile',
         data
       }).then(data => {
-        // console.log("profile in action:", data);
         if (data.profile) {
           context.commit('setProfile', data.profile);
           return data;
         }
       });
     },
-    getProfile(context, data) {
-      console.log("1. data in getprofile action:", data);
+    getProfile(context) {
       return getJson({
-        url: `/profile/${data.id}`
+        url: `/profile`
       }).then(data => {
-        if (data.err) {
-          return data;
+        if (data.profile) {
+          context.commit('setProfile', data.profile);
         }
-        context.commit('setProfile', data.profile);
+        // if (data.err) {
+        //   return data;
+        // }
+        // context.commit('setProfile', data.profile);
         return data;
       });
     },
