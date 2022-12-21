@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/LoginView.vue';
 import RegisterView from '../views/RegisterView.vue';
-import HealthView from '../views/HealthView.vue';
+import ProfileView from '../views/ProfileView.vue';
 import store from '@/store/index';
 
 function authGuard(to, from, next) {
@@ -16,7 +16,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: store.getters.token ? HealthView : LoginView
+    component: store.getters.token ? ProfileView : LoginView
   },
   {
     path: '/login',

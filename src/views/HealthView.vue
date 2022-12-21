@@ -9,11 +9,12 @@
         </option>
       </select>
       
-      <p>The selected body location is: <strong>{{ selected.Name }}</strong></p>
+      
     </div>
     
 
     <div v-if="$store.getters.location.Name">
+      <p>The selected body location is: <strong>{{ $store.getters.location.Name }}</strong></p>
       <h5>Select the symptoms on {{ $store.getters.location.Name }} from below:</h5>
       {{ $store.getters.bodySymptoms }}
      
