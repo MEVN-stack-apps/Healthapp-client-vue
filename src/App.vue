@@ -21,6 +21,9 @@
 
         <ul class="navbar-nav ml-auto" v-else>
           <li class="nav-link">
+            <router-link to="/health" class="nav-link">My Health</router-link>
+          </li>
+          <li class="nav-link">
             <router-link to="/profile" class="nav-link">My Profile</router-link>
           </li>
           <li class="nav-link">
