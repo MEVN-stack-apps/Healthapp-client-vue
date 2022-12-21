@@ -4,12 +4,9 @@ import { postJson, getJson } from '@/utils/https';
 export default createStore({
   state: {
     token: localStorage.getItem('auth-token'),
-    profile: {
-      // firstName: '',
-      // lastName: '',
-      // gender: '',
-      // yearOfBirth: ''
-    },
+    profile: {},
+    locations: [],
+    location: {}
   },
   getters: {
     token(state) {
@@ -18,6 +15,9 @@ export default createStore({
     profile(state) {
       return state.profile;
     },
+    locations(state) {
+      return state.locations;
+    }
   },
   mutations: {
     setToken(state, value) {
@@ -32,6 +32,12 @@ export default createStore({
     setProfile(state, profile) {
       state.profile = profile;
     },
+    setLocations(state, locations) {
+      state.locations = locations;
+    },
+    setLocation(state, location) {
+      state.location = location;
+    }
   },
   actions: {
     addProfile(context, data) {
@@ -52,12 +58,23 @@ export default createStore({
         if (data.profile) {
           context.commit('setProfile', data.profile);
         }
-        // if (data.err) {
-        //   return data;
-        // }
-        // context.commit('setProfile', data.profile);
         return data;
       });
+    },
+    getLocations(context) {
+      return getJson({
+        url: `/locations`
+      }).then(data => {
+        if (data.bodyLocations) {
+          // console.log("data.bodyLocations:", data.bodyLocations);
+          context.commit('setLocations', data.bodyLocations);
+        }
+        return data;
+      });
+    },
+    saveLocation(context, data) {
+      context.commit('setLocation', data);
+      // save location to user database
     },
     registerUser(context, data) {
       return postJson({
