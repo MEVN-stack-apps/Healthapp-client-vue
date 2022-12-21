@@ -3,12 +3,19 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container">
         <a class="navbar-brand" href="#">Symptom Checker App</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
-  
+
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto" v-if="!$store.getters.token">
           <li class="nav-link">
@@ -32,9 +39,7 @@
         </ul>
       </div>
     </nav>
-  
-  
-  
+
     <div id="page-content-container" class="container">
       <router-view />
     </div>
@@ -45,17 +50,17 @@
 export default {
   methods: {
     logout() {
-      this.$store.commit('setToken');
-      this.$store.commit('setLocation');
-      this.$store.commit('setBodySymptoms');
-      this.$router.push('/login');
-    }
-  }
+      this.$store.commit("setToken");
+      this.$store.commit("setLocation");
+      this.$store.commit("setBodySymptoms");
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 
 <style scoped>
 .navbar {
-    background-color: #0c3a4cf9;
-  }
+  background-color: #0c3a4cf9;
+}
 </style>
