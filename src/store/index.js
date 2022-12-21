@@ -6,7 +6,8 @@ export default createStore({
     token: localStorage.getItem('auth-token'),
     profile: {},
     locations: [],
-    location: {}
+    location: {},
+    bodySymptoms: []
   },
   getters: {
     token(state) {
@@ -17,7 +18,13 @@ export default createStore({
     },
     locations(state) {
       return state.locations;
-    }
+    },
+    location(state) {
+      return state.location;
+    },
+    bodySymptoms(state) {
+      return state.bodySymptoms;
+    },
   },
   mutations: {
     setToken(state, value) {
@@ -37,6 +44,9 @@ export default createStore({
     },
     setLocation(state, location) {
       state.location = location;
+    },
+    setBodySymptoms(state, bodySymptoms) {
+      state.bodySymptoms = bodySymptoms;
     }
   },
   actions: {
@@ -75,6 +85,17 @@ export default createStore({
     saveLocation(context, data) {
       context.commit('setLocation', data);
       // save location to user database
+    },
+    getSymptomsByLocation(context, data) {
+      return getJson({
+        url: `/body/symptoms?locationId=${data.locationId}&gender=${data.gender}`
+      }).then(data => {
+        if (data.bodySymptoms) {
+          console.log("data.bodyLocations:", data.bodyLocations);
+          context.commit('setBodySymptoms', data.bodySymptoms);
+        }
+        return data;
+      });
     },
     registerUser(context, data) {
       return postJson({
