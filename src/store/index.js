@@ -91,7 +91,8 @@ export default createStore({
         url: `/body/symptoms?locationId=${data.locationId}&gender=${data.gender}`,
       }).then((data) => {
         if (data.bodySymptoms) {
-          console.log("data.bodyLocations:", data.bodyLocations);
+          console.log("data.bodySymptoms:", data.bodySymptoms);
+
           context.commit("setBodySymptoms", data.bodySymptoms);
         }
         return data;

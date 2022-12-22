@@ -3,16 +3,19 @@
     <h4>Health page</h4>
     <div>
       <h5>Select the Body location from below:</h5>
-      <select v-model="selected" @change="saveLocation()">
-        <option
-          v-for="location in $store.getters.locations"
-          :key="location"
-          :value="location"
-        >
-          {{ location.Name }}
-        </option>
-      </select>
     </div>
+
+    <form>
+      <div
+        v-for="location in $store.getters.locations"
+        :key="location"
+        :value="location"
+        @change="saveLocation(location)"
+      >
+        <input type="radio" name="name" :id="location" :value="location" />
+        <label for="name">{{ location.Name }}</label>
+      </div>
+    </form>
 
     <div v-if="$store.getters.location.Name">
       <p>
@@ -22,7 +25,15 @@
       <h5>
         Select the symptoms on {{ $store.getters.location.Name }} from below:
       </h5>
-      {{ $store.getters.bodySymptoms }}
+
+      <div
+        v-for="bodySymptoms in $store.getters.bodySymptoms"
+        :key="bodySymptoms"
+      >
+        <ul>
+          <li>{{ bodySymptoms?.Name }}</li>
+        </ul>
+      </div>
 
       <!-- <Multiselect v-model="symptoms" :options="$store.getters.bodySymptoms" /> -->
     </div>
@@ -32,7 +43,7 @@
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
-// import Multiselect from '@vueform/multiselect'
+// import Multiselect from "@vueform/multiselect";
 
 export default {
   components: {
@@ -41,7 +52,7 @@ export default {
   setup() {
     const store = useStore();
     const selected = ref("");
-    // const symptoms = ref('');
+    const symptoms = ref("");
 
     store.dispatch("getLocations").then((data) => {
       if (data.err) {
@@ -50,8 +61,9 @@ export default {
       }
     });
 
-    function saveLocation() {
-      store.dispatch("saveLocation", selected.value).then((data) => {
+    let symptomsArray;
+    function saveLocation(location) {
+      store.dispatch("saveLocation", location).then((data) => {
         return data;
       });
       const locationId = store.getters.location.ID;
@@ -62,10 +74,17 @@ export default {
           locationId: locationId,
           gender: gender,
         })
-        .then((data) => {
-          console.log("data in get symptoms by location in view:", data);
-          if (data.err) {
-            alert(data.err);
+        .then(async (data) => {
+          if (data.bodySymptoms) {
+            symptomsArray = await data.bodySymptoms.map((symptom) => {
+              const ID = symptom.ID;
+              const Name = symptom.Name;
+              return { ID, Name };
+            });
+
+            return symptomsArray;
+          } else {
+            alert(data);
             return;
           }
         });
@@ -74,7 +93,8 @@ export default {
     return {
       selected,
       saveLocation,
-      // symptoms
+      symptomsArray,
+      symptoms,
     };
   },
 };
